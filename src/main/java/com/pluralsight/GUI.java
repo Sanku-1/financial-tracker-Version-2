@@ -556,6 +556,7 @@ public class GUI extends JFrame {
                     t.getDescription(),
                     t.getVendor(),
                     amountColor(t.getAmount()));
+
         }
     }
 
