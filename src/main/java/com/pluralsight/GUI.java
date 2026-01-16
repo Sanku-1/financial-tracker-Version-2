@@ -4,17 +4,14 @@ import com.pluralsight.Transaction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class GUI extends JFrame {
     private Transaction transaction;
     private JTextArea ledger;
-    private JLabel totalLabel;
+    private JLabel totalCheckingLabel;
+    private JLabel totalSavingLabel;
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -52,7 +49,42 @@ public class GUI extends JFrame {
         ledger.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(ledger);
         add(scrollPane, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(7, 1, 5, 5));
+
+        JButton addDepositButton = new JButton("Add Deposit");
+        JButton addPaymentButton = new JButton("Add Payment");
+        JButton searchButton = new JButton("Search Transaction");
+        totalSavingLabel = new JLabel("Total: $0.00", SwingConstants.CENTER);
+        totalSavingLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        totalCheckingLabel = new JLabel("Total: $0.00", SwingConstants.CENTER);
+        totalCheckingLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        JButton viewTransactions = new JButton("Transactions");
+        JButton addSavingsButton = new JButton("Clear Order");
+        JButton addSavingsGoalButton = new JButton("Enter Savings Goal");
+
+        addDepositButton.addActionListener(e -> /*placeholder function*/);
+        addPaymentButton.addActionListener(e -> /*placeholder function*/);
+        searchButton.addActionListener(e ->/*placeholder function*/);
+        viewTransactions.addActionListener(e -> /*placeholder function*/);
+        addSavingsButton.addActionListener(e -> /*placeholder function*/);
+        addSavingsGoalButton.addActionListener(e -> /*placeholder function*/);
+
+        buttonPanel.add(addDepositButton);
+        buttonPanel.add(addPaymentButton);
+        buttonPanel.add(searchButton);
+        buttonPanel.add(totalSavingLabel);
+        buttonPanel.add(totalCheckingLabel);
+        buttonPanel.add(viewTransactions);
+        buttonPanel.add(addSavingsButton);
+        buttonPanel.add(addSavingsGoalButton);
+
+
+        add(buttonPanel, BorderLayout.LINE_END);
     }
+
+
 
 
 
