@@ -43,6 +43,7 @@ public class FinancialTracker {
             System.out.println("Choose an option:");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
+            //System.out.println("N) addSavingGoal");
             System.out.println("L) Ledger");
             System.out.println("X) Exit");
 
@@ -52,6 +53,7 @@ public class FinancialTracker {
                 case "D" -> addDeposit(scanner);
                 case "P" -> addPayment(scanner);
                 case "L" -> ledgerMenu(scanner);
+                //case "N" -> addSavingsAmount(scanner);
                 case "X" -> running = false;
                 default -> System.out.println("Invalid option");
             }
@@ -245,6 +247,33 @@ public class FinancialTracker {
             return d2.getTime().compareTo(d1.getTime());
         });
     }
+
+    private static Double addSaving(Scanner scanner){
+
+        double positiveAmount = 0.0;
+        boolean validAmount = false;
+
+        while(!validAmount) {
+            try {
+                System.out.println("Enter the amount (positive) you want to add:");
+                positiveAmount = Double.parseDouble(scanner.nextLine());
+                if (positiveAmount <= 0){
+                    System.out.println("Invalid number. Please enter a positive number.");
+                } else {
+                    validAmount = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number");
+            }
+        }
+        return positiveAmount;
+    }
+
+    //private static Double addSavingsAmount(Scanner scanner){
+      //  System.out.println("Enter the amount you want to save toward: ");
+
+       // return scanner.nextDouble();
+   // }
     /* ------------------------------------------------------------------
        Ledger menu
        ------------------------------------------------------------------ */
@@ -255,6 +284,7 @@ public class FinancialTracker {
             System.out.println("Choose an option:");
             System.out.println("A) All");
             System.out.println("D) Deposits");
+            System.out.println("S) Savings");
             System.out.println("P) Payments");
             System.out.println("R) Reports");
             System.out.println("H) Home");
@@ -266,11 +296,13 @@ public class FinancialTracker {
                 case "D" -> displayDeposits();
                 case "P" -> displayPayments();
                 case "R" -> reportsMenu(scanner);
+                case "S" -> displaySavings(scanner);
                 case "H" -> running = false;
                 default -> System.out.println("Invalid option");
             }
         }
     }
+
     /* ------------------------------------------------------------------
        Display helpers: show data in neat columns
        ------------------------------------------------------------------ */
@@ -290,12 +322,19 @@ public class FinancialTracker {
     }
     private static void displayPayments() {
         defaultHeader();
-        for (Transaction t: transactions) {
-            if(t.getAmount() < 0){
+        for (Transaction t : transactions) {
+            if (t.getAmount() < 0) {
                 defaultOutput(t);
             }
         }
-          }
+    }
+
+        private static void displaySavings(Scanner scanner) {
+            System.out.println("Enter the amount you want to save: ");
+            Double saveAmount = scanner.nextDouble();
+            scanner.nextLine();
+            System.out.println(progressTracker(addSaving(scanner), saveAmount));
+        }
     /* ------------------------------------------------------------------
        Reports menu
        ------------------------------------------------------------------ */
@@ -474,5 +513,30 @@ public class FinancialTracker {
                 t.getDescription(),
                 t.getVendor(),
                 amountColor(t.getAmount()));
+    }
+
+    private static String progressTracker(double saved, double goal){
+        if (goal <= 0) return "goal has to be greater than 10";
+
+        double percent = (saved/goal) * 100.0;
+        if (percent < 0) percent = 0;
+        if (percent > 100) percent = 100;
+
+        double remaining = goal - saved;
+        if (remaining < 0 ) remaining = 0;
+
+        int bar = 20;
+        int fill = (int) Math.round((percent/100.0) * bar);
+
+        StringBuilder tracker = new StringBuilder("[");
+        for (int i = 0; i < bar; i++) {
+            tracker.append(i < fill ? "==" : "-");
+        }
+        tracker.append("]");
+
+        return String.format(
+                "Goal: $%.2f%nSaved: $%.2f%nProgress: %.1f%%  %s%nRemaining: $%.2f",
+                goal, saved, percent, tracker, remaining
+        );
     }
 }
