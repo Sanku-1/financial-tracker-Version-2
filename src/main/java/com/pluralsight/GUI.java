@@ -92,8 +92,8 @@ public class GUI extends JFrame {
         JButton addSavingsButton = new JButton("Clear Order");
         JButton addSavingsGoalButton = new JButton("Enter Savings Goal");
 
-        addDepositButton.addActionListener(e -> displayLedger());
-        addPaymentButton.addActionListener(e -> displayLedger());
+        addDepositButton.addActionListener(e -> addDeposit());
+        addPaymentButton.addActionListener(e -> addPayment());
         searchButton.addActionListener(e -> displayLedger());
         viewTransactions.addActionListener(e -> displayLedger());
         addSavingsButton.addActionListener(e -> displayLedger());
@@ -186,7 +186,7 @@ public class GUI extends JFrame {
         /* ------------------------------------------------------------------
            Add new transactions
            ------------------------------------------------------------------ */
-        private static void addDeposit(Scanner scanner) {
+        private static void addDeposit() {
             LocalDate dateFormatted = null;
             LocalTime timeFormatted = null;
 
@@ -195,7 +195,7 @@ public class GUI extends JFrame {
             while(!validDate) {
                 try {
                     System.out.println("Date (yyyy-MM-dd):");
-                    String date = scanner.nextLine();
+                    String date = (String) JOptionPane.showInputDialog("Please enter the date of your deposit");
                     dateFormatted = LocalDate.parse(date, DATE_FMT);
                     validDate = true;
                 } catch (Exception e) {
@@ -207,7 +207,7 @@ public class GUI extends JFrame {
             while(!validTime) {
                 try {
                     System.out.println("Time(HH:mm:ss):");
-                    String time = scanner.nextLine();
+                    String time = JOptionPane.showInputDialog("Please enter the time of your transaction (HH:mm:ss)");
                     timeFormatted = LocalTime.parse(time, TIME_FMT);
                     validTime = true;
                 } catch (Exception e) {
@@ -215,10 +215,10 @@ public class GUI extends JFrame {
                 }
             }
             System.out.println("Description:");
-            String description = scanner.nextLine();
+            String description = (String) JOptionPane.showInputDialog("Please enter the description of your deposit");
 
             System.out.println("Vendor:");
-            String vendor = scanner.nextLine();
+            String vendor = (String) JOptionPane.showInputDialog("Please enter the vendor of your deposit");
 
             double positiveAmount = 0.0;
             boolean validAmount = false;
@@ -226,7 +226,7 @@ public class GUI extends JFrame {
             while(!validAmount) {
                 try {
                     System.out.println("Amount (positive):");
-                    positiveAmount = Double.parseDouble(scanner.nextLine());
+                    positiveAmount = Double.parseDouble(JOptionPane.showInputDialog("Please enter the amount of your deposit"));
                     if (positiveAmount <= 0){
                         System.out.println("Invalid number. Please enter a positive number.");
                     } else {
@@ -257,7 +257,7 @@ public class GUI extends JFrame {
             });
         }
 
-        private static void addPayment(Scanner scanner) {
+        private static void addPayment() {
             LocalDate dateFormatted = null;
             LocalTime timeFormatted = null;
 
@@ -266,7 +266,7 @@ public class GUI extends JFrame {
             while(!validDate) {
                 try {
                     System.out.println("Date (yyyy-MM-dd):");
-                    String date = scanner.nextLine();
+                    String date = (String) JOptionPane.showInputDialog("Please enter the date of your deposit");
                     dateFormatted = LocalDate.parse(date, DATE_FMT);
                     validDate = true;
                 } catch (Exception e) {
@@ -278,7 +278,7 @@ public class GUI extends JFrame {
             while(!validTime) {
                 try {
                     System.out.println("Time(HH:mm:ss):");
-                    String time = scanner.nextLine();
+                    String time = JOptionPane.showInputDialog("Please enter the time of your transaction (HH:mm:ss)");
                     timeFormatted = LocalTime.parse(time, TIME_FMT);
                     validTime = true;
                 } catch (Exception e) {
@@ -286,10 +286,10 @@ public class GUI extends JFrame {
                 }
             }
             System.out.println("Description:");
-            String description = scanner.nextLine();
+            String description = (String) JOptionPane.showInputDialog("Please enter the description of your payment");
 
             System.out.println("Vendor:");
-            String vendor = scanner.nextLine();
+            String vendor = (String) JOptionPane.showInputDialog("Please enter the vendor of your payment");
 
             double positiveAmount = 0.0;
             boolean validAmount = false;
@@ -297,7 +297,7 @@ public class GUI extends JFrame {
             while(!validAmount) {
                 try {
                     System.out.println("Amount (positive):");
-                    positiveAmount = Double.parseDouble(scanner.nextLine());
+                    positiveAmount = Double.parseDouble(JOptionPane.showInputDialog("Please enter the amount of your payment"));
                     if (positiveAmount <= 0){
                         System.out.println("Invalid number. Please enter a positive number.");
                     } else {
